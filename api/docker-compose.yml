@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+  search_classify_tweets:
+    image: search_classify_tweets
+    build:
+      context: search_classify_tweets
+      dockerfile: Dockerfile
+    expose: 
+      - "5000"
+    volumes:
+      - ./search_classify_tweets/:/code/search_classify_tweets
+    ports:
+      - 5000:5000
+    networks:
+      - backend
+  
+  mongo:
+    image: mongo
+    user: root
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+
+
+networks:
+  backend:
+    driver: bridge
