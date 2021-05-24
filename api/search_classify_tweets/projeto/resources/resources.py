@@ -46,14 +46,12 @@ class SearchResources(Resource):
             Método POST para realizar a busca e classificação dos tweets coletados.
             inputs:\n
             'input_query': texto ou hashtag para coletar tweets.
-            'tweets_limit': limite de tweets a serem coletados.
         """
         logger.info(mensagens.REQUEST)
         data = request.get_json()
 
         try:
             input_query = data["input_query"]
-            tweets_limit = data['tweets_limit']
 
         except KeyError as error:
             response = objResponse.send_exception(objError=error, messages=mensagens.ERROR_KEY, status=codeHttp.ERROR_500)
@@ -69,7 +67,7 @@ class SearchResources(Resource):
         
         try:
             logger.info(f'[+] ------ Buscando tweets ------')
-            results = search_tweets(input_query, tweets_limit)
+            results = search_tweets(input_query)
             logger.info(f'[-] ------ Fim busca de tweets ------')
 
         except SearchException as error:
